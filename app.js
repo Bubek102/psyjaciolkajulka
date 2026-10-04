@@ -122,20 +122,27 @@
   var pupils = $(".dog__pupils");
   var dogSvg = $(".dog");
   if (art && pupils && dogSvg && !reduceMotion) {
-    var raf = null;
-    window.addEventListener("pointermove", function (e) {
-      if (raf) return;
-      raf = requestAnimationFrame(function () {
-        raf = null;
-        var r = dogSvg.getBoundingClientRect();
-        if (r.bottom < 0 || r.top > window.innerHeight) return;
-        var scale = r.width / 400;
-        var cx = r.left + 191 * scale, cy = r.top + 139 * scale;
-        var dx = e.clientX - cx, dy = e.clientY - cy;
-        var d = Math.hypot(dx, dy) || 1;
-        var k = Math.min(d / 260, 1) * 4;
-        pupils.style.transform = "translate(" + (dx / d * k).toFixed(2) + "px," + (dy / d * k).toFixed(2) + "px)";
+    // oczy podążają za kursorem ze sprężyną (dekoracyjny ruch powinien mieć „pęd”)
+    var target = { x: 0, y: 0 }, pos = { x: 0, y: 0 }, vel = { x: 0, y: 0 }, running = false;
+    var STIFF = 0.12, DAMP = 0.72;
+    var tick = function () {
+      ["x", "y"].forEach(function (k) {
+        vel[k] = (vel[k] + (target[k] - pos[k]) * STIFF) * DAMP;
+        pos[k] += vel[k];
       });
+      pupils.style.transform = "translate(" + pos.x.toFixed(2) + "px," + pos.y.toFixed(2) + "px)";
+      if (Math.abs(target.x - pos.x) + Math.abs(target.y - pos.y) + Math.abs(vel.x) + Math.abs(vel.y) > 0.02) requestAnimationFrame(tick);
+      else running = false;
+    };
+    window.addEventListener("pointermove", function (e) {
+      var r = dogSvg.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > window.innerHeight) return;
+      var scale = r.width / 400;
+      var dx = e.clientX - (r.left + 191 * scale), dy = e.clientY - (r.top + 139 * scale);
+      var d = Math.hypot(dx, dy) || 1;
+      var k = Math.min(d / 260, 1) * 4;
+      target.x = dx / d * k; target.y = dy / d * k;
+      if (!running) { running = true; requestAnimationFrame(tick); }
     }, { passive: true });
 
     var bark = $(".bark");
@@ -173,7 +180,7 @@
   ];
   var panel = $(".signals__panel");
   var tabs = $$(".signals__list [role=tab]");
-  var showSignal = function (i) {
+  var showSignal = function (i, instant) {
     var s = SIGNALS[i];
     tabs.forEach(function (b, j) {
       b.setAttribute("aria-selected", String(i === j));
@@ -185,7 +192,9 @@
     $(".signals__what", panel).textContent = nbsp(s.w);
     $(".signals__do", panel).innerHTML = "<b>Co możesz zrobić?</b> ";
     $(".signals__do", panel).appendChild(document.createTextNode(nbsp(s.d)));
-    panel.classList.remove("is-changing"); void panel.offsetWidth; panel.classList.add("is-changing");
+    panel.classList.remove("is-changing");
+    // akcji z klawiatury nie animujemy – mają być natychmiastowe
+    if (!instant) { void panel.offsetWidth; panel.classList.add("is-changing"); }
   };
   tabs.forEach(function (b, i) {
     b.addEventListener("click", function () { showSignal(i); });
@@ -194,10 +203,10 @@
       if (!dir) return;
       e.preventDefault();
       var n = (i + dir + tabs.length) % tabs.length;
-      showSignal(n); tabs[n].focus();
+      showSignal(n, true); tabs[n].focus();
     });
   });
-  if (panel) showSignal(0);
+  if (panel) showSignal(0, true);
 
   /* ---------- Rezerwacje (Cal.com) ---------- */
   var svcBox = $(".booking__services");
