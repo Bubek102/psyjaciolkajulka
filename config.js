@@ -7,6 +7,11 @@
  * (to, co jest po "cal.com/" w adresie danego typu spotkania w panelu Cal.com).
  */
 window.SITE_CONFIG = {
+  // Zdjęcia: wrzuć pliki i zmień na true
+  //   julka     -> assets/img/julka.jpg (zdjęcie w sekcji „O mnie”)
+  //   instagram -> assets/instagram/1.jpg … 6.jpg (siatka pod kartą profilu)
+  photos: { julka: false, instagram: false },
+
   calOrigin: "https://cal.com",
   calProfile: "psyjaciolka-julka",
   brandColor: "#2f5d50",

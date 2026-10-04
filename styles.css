@@ -287,14 +287,14 @@ body.menu-open { overflow: hidden; }
 .dog__pupils { transform-box: view-box; will-change: transform; }
 .dog__paw { fill: var(--paw); }
 .dog__blush { fill: #f2a48c; opacity: .45; }
-.hero__art { cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.hero__art { cursor: pointer; -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
 .hero__art:active .dog { transform: scale(.98); }
 .dog { transition: transform 160ms var(--ease-out); }
 .bark {
-  position: absolute; left: 6%; top: 26%; z-index: 3;
+  position: absolute; left: 3%; top: 36%; z-index: 3;
   background: var(--ink); color: var(--cream); font-family: var(--font-display); font-style: italic; font-weight: 600;
-  font-size: 1.375rem; padding: 10px 18px; border-radius: 20px 20px 20px 4px; box-shadow: var(--shadow);
-  opacity: 0; transform: translateY(6px) scale(.92); transform-origin: bottom left; transition: opacity 200ms var(--ease-out), transform 260ms var(--ease-pop);
+  font-size: 1.375rem; padding: 10px 18px; border-radius: 20px 20px 4px 20px; box-shadow: var(--shadow);
+  opacity: 0; transform: translateY(6px) scale(.92); transform-origin: bottom right; transition: opacity 200ms var(--ease-out), transform 260ms var(--ease-pop);
   pointer-events: none; white-space: nowrap;
 }
 .bark.is-on { opacity: 1; transform: none; }
@@ -306,10 +306,9 @@ body.menu-open { overflow: hidden; }
 .dog__lick { fill: #ef8f86; opacity: 0; transform-box: view-box; transform-origin: 190px 211px; }
 .dog__collar { fill: none; stroke: var(--accent); stroke-width: 15; stroke-linecap: round; }
 .dog__tag { fill: var(--peach); stroke: var(--accent-deep); stroke-width: 3; }
-.dog__tail > path { fill: none; stroke: var(--coat-2); stroke-width: 24; stroke-linecap: round; }
 .dog__tail { transform-origin: 290px 336px; transform-box: view-box; animation: wag 520ms ease-in-out infinite alternate; }
 /* końcówka ogona spóźnia się o ćwierć ruchu – efekt bicza (follow-through) */
-.dog__tail-tip { transform-origin: 340px 286px; transform-box: view-box; animation: wagTip 520ms ease-in-out 120ms infinite alternate; }
+.dog__tail-tip { transform-origin: 340px 285px; transform-box: view-box; animation: wagTip 520ms ease-in-out 120ms infinite alternate; }
 @keyframes wagTip { from { transform: rotate(-12deg); } to { transform: rotate(14deg); } }
 .hero__art.is-excited .dog__tail, .hero__art.is-excited .dog__tail-tip,
 .hero__art.is-petting .dog__tail, .hero__art.is-petting .dog__tail-tip { animation-duration: 230ms; }
@@ -850,6 +849,8 @@ body.menu-open { overflow: hidden; }
   .hero { padding-top: 104px; min-height: auto; }
   .hero__grid { grid-template-columns: 1fr; gap: 24px; }
   .hero__art { justify-self: center; max-width: 420px; order: -1; }
+  /* na mniejszych ekranach piesek nie jest zasłonięty – te informacje są w liczbach pod tekstem */
+  .sticker--b, .sticker--c { display: none; }
   .about__grid { grid-template-columns: 1fr; }
   .photo--arch { max-width: 420px; margin: 0 auto; width: 100%; }
   .signals { grid-template-columns: 1fr; }

@@ -27,7 +27,7 @@ Stronę można też wrzucić na inny hosting statyczny, np. Netlify, Cloudflare 
 | 6 zdjęć z Instagrama (kwadratowe) | `assets/instagram/1.jpg` … `6.jpg` |
 | Linki do konkretnych typów spotkań w Cal.com | `config.js` → `services[].calLink` |
 
-Dopóki brakuje któregoś zdjęcia, strona pokazuje ilustrowaną zaślepkę, więc nic się nie „sypie”.
+Po wrzuceniu zdjęć włącz je w `config.js` (`photos: { julka: true, instagram: true }`). Do tego czasu strona nie pobiera tych plików: w „O mnie” jest ilustrowana zaślepka, a siatka z Instagrama jest ukryta.
 
 ## Przed publikacją
 

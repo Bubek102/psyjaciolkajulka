@@ -19,27 +19,19 @@
   /* ---------- Rok w stopce ---------- */
   $$(".year").forEach(function (el) { el.textContent = new Date().getFullYear(); });
 
-  /* ---------- Zdjęcia: zaślepka, gdy pliku jeszcze nie ma ---------- */
-  $$(".photo img").forEach(function (img) {
+  /* ---------- Zdjęcia: wczytywane dopiero, gdy są włączone w config.js ----------
+     Dzięki temu strona nie prosi serwera o pliki, których jeszcze nie ma. */
+  var PHOTOS = CONFIG.photos || {};
+  $$(".photo img[data-src]").forEach(function (img) {
     var box = img.closest(".photo");
-    var markEmpty = function () { box.classList.add("is-empty"); };
-    if (img.complete && img.naturalWidth === 0) markEmpty();
-    img.addEventListener("error", markEmpty);
+    var isFeed = !!img.closest(".feed");
+    var enabled = isFeed ? PHOTOS.instagram : PHOTOS.julka;
+    if (!enabled) { box.classList.add("is-empty"); return; }
+    img.addEventListener("error", function () { box.classList.add("is-empty"); });
+    img.src = img.getAttribute("data-src");
   });
-
-  /* ---------- Siatka Instagrama: pokaż dopiero, gdy są prawdziwe zdjęcia ---------- */
   var feed = $(".feed");
-  if (feed) {
-    var srcs = $$("img", feed).map(function (img) { return img.getAttribute("src"); });
-    var loaded = 0, settled = 0;
-    srcs.forEach(function (src) {
-      var probe = new Image();
-      probe.onload = function () { loaded++; settled++; done(); };
-      probe.onerror = function () { settled++; done(); };
-      probe.src = src;
-    });
-    var done = function () { if (settled === srcs.length && loaded === srcs.length) feed.hidden = false; };
-  }
+  if (feed && PHOTOS.instagram) feed.hidden = false;
 
   /* ---------- Nawigacja ---------- */
   var nav = $(".nav");
@@ -271,8 +263,36 @@
       }, 2000);
     }
 
+    // telefon: przytrzymanie palca na głowie = głaskanie (zamiast „Hau!” po puszczeniu)
+    var pressTimer = null, pressStart = null, longPressed = false;
+    art.addEventListener("pointerdown", function (e) {
+      if (e.pointerType !== "touch") return;
+      var r = dogSvg.getBoundingClientRect(), sc = r.width / 400;
+      var vx = (e.clientX - r.left) / sc, vy = (e.clientY - r.top) / sc;
+      if (Math.hypot(vx - 190, vy - 150) > 82) return;
+      pressStart = { x: e.clientX, y: e.clientY };
+      longPressed = false;
+      clearTimeout(pressTimer);
+      pressTimer = setTimeout(function () {
+        longPressed = true; petting = true; wake();
+        art.classList.add("is-petting", "is-happy");
+        tilt.t = 5; kick();
+      }, 420);
+    });
+    var endPress = function () {
+      clearTimeout(pressTimer);
+      if (longPressed) { stopPetting(); tilt.t = 0; kick(); }
+      pressStart = null;
+    };
+    art.addEventListener("pointermove", function (e) {
+      if (pressStart && Math.hypot(e.clientX - pressStart.x, e.clientY - pressStart.y) > 12 && !longPressed) clearTimeout(pressTimer);
+    });
+    ["pointerup", "pointercancel", "pointerleave"].forEach(function (ev) { art.addEventListener(ev, endPress); });
+    art.addEventListener("contextmenu", function (e) { if (longPressed) e.preventDefault(); });
+
     // kliknięcie: przygotowanie (przysiad) → skok z rozciągnięciem → lądowanie z ugięciem
     art.addEventListener("click", function () {
+      if (longPressed) { longPressed = false; return; }
       wake();
       bark.textContent = lines[n++ % lines.length];
       bark.classList.add("is-on");
