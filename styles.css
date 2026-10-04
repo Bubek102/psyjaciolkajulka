@@ -542,6 +542,47 @@ body.menu-open { overflow: hidden; }
 .tip h4 { align-self: end; }
 
 /* ---------- Instagram ---------- */
+.social { display: grid; grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); gap: 24px; align-items: stretch; }
+.profile {
+  background: var(--forest); color: var(--cream); border-radius: var(--radius-lg); padding: clamp(24px, 3.4vw, 40px);
+  display: flex; flex-direction: column; position: relative; overflow: hidden; box-shadow: var(--shadow-lg);
+}
+.profile::after {
+  content: ""; position: absolute; right: -50px; bottom: -50px; width: 220px; height: 220px; opacity: .07;
+  background: url("assets/favicon.svg") center / contain no-repeat; transform: rotate(-18deg);
+}
+.profile__top { display: flex; align-items: center; gap: 16px; margin-bottom: 18px; }
+.profile__avatar {
+  flex: none; width: 72px; height: 72px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--butter); box-shadow: 0 0 0 3px var(--forest), 0 0 0 6px var(--accent-bright);
+}
+.profile__avatar svg { width: 38px; height: 38px; fill: var(--forest); }
+.profile__handle { margin: 0; font-weight: 800; font-size: 1.125rem; }
+.profile__name { margin: 0; font-size: 0.9375rem; color: rgba(251,246,238,.75); }
+.profile__bio { color: rgba(251,246,238,.88); margin-bottom: 22px; }
+.profile__stats { list-style: none; margin: 0 0 26px; padding: 18px 0 0; border-top: 1px solid rgba(251,246,238,.18); display: flex; gap: 32px; }
+.profile__stats b { display: block; font-family: var(--font-display); font-size: 1.75rem; line-height: 1.1; color: var(--butter); }
+.profile__stats span { font-size: 0.875rem; color: rgba(251,246,238,.75); }
+.profile__actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: auto; position: relative; z-index: 1; }
+.profile__actions .btn--ink { --bg: var(--cream); --fg: var(--ink); }
+.topics { display: grid; gap: 12px; align-content: start; }
+.topics__label { margin: 0 0 2px; font-weight: 800; font-size: 0.8125rem; letter-spacing: .1em; text-transform: uppercase; color: var(--forest); }
+.topic {
+  display: flex; gap: 16px; align-items: flex-start; text-decoration: none; background: var(--paper);
+  border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 20px;
+  transition: transform 160ms var(--ease-out), box-shadow 250ms ease, border-color 200ms ease;
+}
+.topic:active { transform: scale(.98); }
+.topic__icon { flex: none; width: 44px; height: 44px; border-radius: 14px; display: grid; place-items: center; background: var(--sage); color: var(--forest-deep); }
+.topic:nth-of-type(2) .topic__icon { background: var(--peach); color: var(--accent-hover); }
+.topic:nth-of-type(3) .topic__icon { background: var(--butter); color: #6b5310; }
+.topic__icon svg { width: 22px; height: 22px; fill: none; }
+.topic__icon svg use[href="#i-paw"] { fill: currentColor; }
+.topic:nth-of-type(2) .topic__icon svg { fill: currentColor; }
+.topic b { display: block; font-family: var(--font-display); font-size: 1.1875rem; line-height: 1.25; margin-bottom: 4px; color: var(--ink); }
+.topic span:last-child { font-size: 0.9375rem; color: var(--ink-soft); line-height: 1.5; }
+.feed { margin-top: 24px; }
+.feed[hidden] { display: none; }
 .insta__head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 40px; flex-wrap: wrap; }
 .insta__head .h2 { margin-bottom: 0; }
 .insta__head .h2 em { word-break: break-word; }
@@ -719,6 +760,7 @@ body.menu-open { overflow: hidden; }
   .tip:hover { transform: translateY(-5px) rotate(-.4deg); box-shadow: var(--shadow); background-color: #fff7ec; }
   .feed__item:hover img { transform: scale(1.06); }
   .feed__item:not(.is-empty):hover::after { opacity: 1; }
+  .topic:hover { transform: translateY(-3px); box-shadow: var(--shadow); border-color: transparent; }
   .svc:hover { border-color: rgba(251,246,238,.5); background-color: rgba(251,246,238,.1); }
   .svc:hover .svc__arrow { transform: translateX(4px); }
   .socials a:hover { background: rgba(255,255,255,.26); transform: translateX(4px); }
@@ -760,6 +802,7 @@ body.menu-open { overflow: hidden; }
   .signals__list button { white-space: nowrap; flex: none; scroll-snap-align: start; }
   .signals__list button::after { display: none; }
   .faq__grid { grid-template-columns: 1fr; }
+  .social { grid-template-columns: 1fr; }
   .faq__grid > div:first-child { position: static; }
   .contact__card { grid-template-columns: 1fr; }
   .fab { display: inline-flex; }

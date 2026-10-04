@@ -27,6 +27,20 @@
     img.addEventListener("error", markEmpty);
   });
 
+  /* ---------- Siatka Instagrama: pokaż dopiero, gdy są prawdziwe zdjęcia ---------- */
+  var feed = $(".feed");
+  if (feed) {
+    var srcs = $$("img", feed).map(function (img) { return img.getAttribute("src"); });
+    var loaded = 0, settled = 0;
+    srcs.forEach(function (src) {
+      var probe = new Image();
+      probe.onload = function () { loaded++; settled++; done(); };
+      probe.onerror = function () { settled++; done(); };
+      probe.src = src;
+    });
+    var done = function () { if (settled === srcs.length && loaded === srcs.length) feed.hidden = false; };
+  }
+
   /* ---------- Nawigacja ---------- */
   var nav = $(".nav");
   var onScroll = function () { nav.classList.toggle("is-scrolled", window.scrollY > 20); };
