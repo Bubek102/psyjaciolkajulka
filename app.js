@@ -359,6 +359,23 @@
   var goBook = function (id) {
     selectService(id);
     bookingSection.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" });
+    // po dojechaniu do kalendarza jednorazowo wskaż wybraną usługę
+    var chosen = $('.svc[data-id="' + id + '"]', svcBox);
+    if (!chosen) return;
+    var flash = function () {
+      chosen.classList.remove("is-flash"); void chosen.offsetWidth; chosen.classList.add("is-flash");
+      setTimeout(function () { chosen.classList.remove("is-flash"); }, 700);
+    };
+    // scrollend, a gdy przewijania nie było (już jesteśmy przy kalendarzu) – zapasowy timeout
+    var done = false;
+    var once = function () {
+      if (done) return;
+      done = true;
+      window.removeEventListener("scrollend", once);
+      flash();
+    };
+    if ("onscrollend" in window && !reduceMotion) window.addEventListener("scrollend", once);
+    setTimeout(once, reduceMotion ? 0 : 1200);
   };
   $$("[data-book]").forEach(function (b) {
     b.addEventListener("click", function () { goBook(b.getAttribute("data-book")); });
