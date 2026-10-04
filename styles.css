@@ -265,7 +265,10 @@ body.menu-open { overflow: hidden; }
 .dog { position: absolute; inset: 4% 4% 0; width: 92%; height: auto; overflow: visible; }
 .dog__shadow { fill: rgba(0,0,0,.18); }
 .dog__body, .dog__leg, .dog__skull, .dog__neck { fill: var(--butter); }
-.dog__haunch { fill: #ebc96f; }
+.dog__haunch { fill: #ecca70; }
+.dog__leg--back { fill: #ecd07d; }
+.dog__paw--back { fill: #f7e6bd; }
+.dog__toes { fill: none; stroke: #e2c27a; stroke-width: 2.4; stroke-linecap: round; }
 .dog__chest, .dog__muzzle { fill: var(--paper); }
 .dog__ear, .dog__ear ellipse { fill: #c98a52; }
 .dog__ear--back { fill: #b77840; }
@@ -275,7 +278,6 @@ body.menu-open { overflow: hidden; }
 .dog__eyes .dog__shine { fill: #fff; }
 .dog__pupils { transform-box: view-box; will-change: transform; }
 .dog__paw { fill: #fff3d6; }
-.dog__crease { fill: none; stroke: #ddb95c; stroke-width: 3; stroke-linecap: round; }
 .dog__blush { fill: #f2a48c; opacity: .55; }
 .hero__art { cursor: pointer; -webkit-tap-highlight-color: transparent; }
 .hero__art:active .dog { transform: scale(.98); }
