@@ -266,12 +266,19 @@ body.menu-open { overflow: hidden; }
 .dog__shadow { fill: rgba(0,0,0,.18); }
 .dog__body, .dog__leg, .dog__skull, .dog__neck { fill: var(--butter); }
 .dog__haunch { fill: #ecca70; }
-.dog__leg--back { fill: #ecd07d; }
+.dog__leg--back { fill: var(--butter); }
+.dog__leg-gap { fill: none; stroke: #9a5f1c; stroke-width: 3.5; stroke-linecap: round; opacity: .18; }
 .dog__paw--back { fill: #f7e6bd; }
 .dog__toes { fill: none; stroke: #e2c27a; stroke-width: 2.4; stroke-linecap: round; }
 .dog__chest, .dog__muzzle { fill: var(--paper); }
-.dog__ear, .dog__ear ellipse { fill: #c98a52; }
-.dog__ear--back ellipse { fill: #b77840; }
+.dog__ear path { fill: url(#dog-g-ear); }
+.dog__ear--back path { fill: url(#dog-g-ear-far); }
+.dog__shade { fill: url(#dog-g-shade); }
+.dog__light { fill: url(#dog-g-light); }
+.dog__brows { fill: none; stroke: #b77840; stroke-width: 4; stroke-linecap: round; opacity: .85; }
+.dog__ring { fill: none; stroke: var(--accent-deep); stroke-width: 3; }
+.dog__tail-fill { fill: #c98a52; }
+.dog__shine--small { opacity: .8; }
 .dog__spot { fill: #e9bb63; opacity: .9; }
 .dog__nose { fill: var(--ink); }
 .dog__eyes circle { fill: var(--ink); }
@@ -295,26 +302,26 @@ body.menu-open { overflow: hidden; }
 .dog__tongue path { fill: #ef8f86; }
 .dog__tongue .dog__tongue-line { fill: none; stroke: #d9706a; stroke-width: 2; stroke-linecap: round; }
 .dog__nose-shine { fill: #fff; opacity: .35; }
-.dog__collar { fill: var(--accent); }
+.dog__collar { fill: none; stroke: var(--accent); stroke-width: 15; stroke-linecap: round; }
 .dog__tag { fill: var(--peach); stroke: var(--accent-deep); stroke-width: 3; }
-.dog__tail path { fill: none; stroke: #c98a52; stroke-width: 20; stroke-linecap: round; }
-.dog__tail { transform-origin: 282px 330px; transform-box: view-box; animation: wag 520ms ease-in-out infinite alternate; }
+.dog__tail > path { fill: none; stroke: #c98a52; stroke-width: 22; stroke-linecap: round; }
+.dog__tail { transform-origin: 292px 334px; transform-box: view-box; animation: wag 520ms ease-in-out infinite alternate; }
 /* końcówka ogona spóźnia się o ćwierć ruchu – efekt bicza (follow-through) */
-.dog__tail-tip { transform-origin: 334px 288px; transform-box: view-box; animation: wagTip 520ms ease-in-out 120ms infinite alternate; }
+.dog__tail-tip { transform-origin: 338px 290px; transform-box: view-box; animation: wagTip 520ms ease-in-out 120ms infinite alternate; }
 @keyframes wagTip { from { transform: rotate(-12deg); } to { transform: rotate(14deg); } }
 .hero__art.is-excited .dog__tail, .hero__art.is-excited .dog__tail-tip { animation-duration: 230ms; }
 .hero__art.is-sleepy .dog__tail, .hero__art.is-sleepy .dog__tail-tip { animation-duration: 1800ms; }
 
 /* oddech: całe ciało lekko „rośnie” od podłogi */
-.dog__jump, .dog__breathe { transform-box: view-box; transform-origin: 205px 388px; }
+.dog__jump, .dog__breathe { transform-box: view-box; transform-origin: 208px 388px; }
 .dog__breathe { animation: breathe 3600ms ease-in-out infinite; }
 @keyframes breathe { 0%, 100% { transform: scale(1, 1); } 50% { transform: scale(1.006, 1.016); } }
 .hero__art.is-sleepy .dog__breathe { animation-duration: 5200ms; }
 .dog__shadow { transform-box: fill-box; transform-origin: center; }
 
-.dog__ear-flop--front { transform-origin: 140px 106px; transform-box: view-box; }
-.dog__ear-flop--back { transform-origin: 240px 104px; transform-box: view-box; }
-.dog__ear--back { transform-origin: 240px 104px; transform-box: view-box; }
+.dog__ear-flop--front { transform-origin: 146px 96px; transform-box: view-box; }
+.dog__ear-flop--back { transform-origin: 234px 96px; transform-box: view-box; }
+.dog__ear--back { transform-origin: 238px 96px; transform-box: view-box; }
 
 /* sen po dłuższej bezczynności */
 .dog__lids { fill: none; stroke: var(--ink); stroke-width: 3.5; stroke-linecap: round; opacity: 0; transition: opacity 250ms ease; }
@@ -333,11 +340,11 @@ body.menu-open { overflow: hidden; }
 /* poza ekranem nic się nie rusza */
 .hero__art.is-paused, .hero__art.is-paused * { animation-play-state: paused !important; }
 @keyframes wag { from { transform: rotate(-14deg); } to { transform: rotate(16deg); } }
-.dog__eyes { transform-origin: 188px 139px; transform-box: view-box; }
-.dog__head { transform-origin: 192px 220px; transform-box: view-box; will-change: transform; }
-.dog__ear--front { transform-origin: 140px 104px; transform-box: view-box; animation: ear 6s ease-in-out infinite; }
+.dog__eyes { transform-origin: 190px 152px; transform-box: view-box; }
+.dog__head { transform-origin: 190px 224px; transform-box: view-box; will-change: transform; }
+.dog__ear--front { transform-origin: 142px 96px; transform-box: view-box; animation: ear 6s ease-in-out infinite; }
 @keyframes ear { 0%, 80%, 100% { transform: rotate(0); } 86% { transform: rotate(8deg); } 92% { transform: rotate(-3deg); } }
-.dog__tongue { transform-origin: 184px 193px; transform-box: view-box; animation: pant .9s ease-in-out infinite alternate; }
+.dog__tongue { transform-origin: 190px 201px; transform-box: view-box; animation: pant .9s ease-in-out infinite alternate; }
 @keyframes pant { from { transform: scaleY(.85); } to { transform: scaleY(1.1); } }
 
 .sticker {

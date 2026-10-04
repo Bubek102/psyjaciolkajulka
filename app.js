@@ -189,7 +189,7 @@
       if (!visible || e.pointerType === "touch") return;
       lastPointer = Date.now();
       var r = dogSvg.getBoundingClientRect(), sc = r.width / 400;
-      var dx = e.clientX - (r.left + 188 * sc), dy = e.clientY - (r.top + 139 * sc);
+      var dx = e.clientX - (r.left + 190 * sc), dy = e.clientY - (r.top + 152 * sc);
       var d = Math.hypot(dx, dy) || 1, k = Math.min(d / 260, 1) * 4;
       eyeX.t = dx / d * k; eyeY.t = dy / d * k;
       var near = Math.max(0, 1 - d / (r.width * 1.4));
