@@ -131,44 +131,150 @@
     hero.addEventListener("pointerleave", function () { last = null; });
   }
 
-  /* ---------- Piesek: oczy za kursorem, „Hau!” po kliknięciu ---------- */
+  /* ---------- Piesek ----------
+     Warstwy ruchu jak w maskotkach (Duolingo/Rive): oddech i ogon w CSS, a tu
+     „mózg”: sprężyny dla oczu i głowy, uszy z bezwładem, losowe mrugnięcia,
+     rozglądanie się, skok po kliknięciu (przygotowanie, rozciągnięcie, lądowanie)
+     i drzemka po dłuższej bezczynności. */
   var art = $(".hero__art");
-  var pupils = $(".dog__pupils");
   var dogSvg = $(".dog");
-  if (art && pupils && dogSvg && !reduceMotion) {
-    // oczy podążają za kursorem ze sprężyną (dekoracyjny ruch powinien mieć „pęd”)
-    var target = { x: 0, y: 0 }, pos = { x: 0, y: 0 }, vel = { x: 0, y: 0 }, running = false;
-    var STIFF = 0.12, DAMP = 0.72;
-    var tick = function () {
-      ["x", "y"].forEach(function (k) {
-        vel[k] = (vel[k] + (target[k] - pos[k]) * STIFF) * DAMP;
-        pos[k] += vel[k];
-      });
-      pupils.style.transform = "translate(" + pos.x.toFixed(2) + "px," + pos.y.toFixed(2) + "px)";
-      if (Math.abs(target.x - pos.x) + Math.abs(target.y - pos.y) + Math.abs(vel.x) + Math.abs(vel.y) > 0.02) requestAnimationFrame(tick);
-      else running = false;
-    };
-    window.addEventListener("pointermove", function (e) {
-      var r = dogSvg.getBoundingClientRect();
-      if (r.bottom < 0 || r.top > window.innerHeight) return;
-      var scale = r.width / 400;
-      var dx = e.clientX - (r.left + 191 * scale), dy = e.clientY - (r.top + 139 * scale);
-      var d = Math.hypot(dx, dy) || 1;
-      var k = Math.min(d / 260, 1) * 4;
-      target.x = dx / d * k; target.y = dy / d * k;
-      if (!running) { running = true; requestAnimationFrame(tick); }
-    }, { passive: true });
-
+  if (art && dogSvg) {
+    var pupils = $(".dog__pupils"), head = $(".dog__head"), eyes = $(".dog__eyes");
+    var jumpRig = $(".dog__jump"), shadow = $(".dog__shadow");
+    var flops = $$(".dog__ear-flop"), earF = $(".dog__ear--front"), earB = $(".dog__ear--back");
     var bark = $(".bark");
     var lines = ["Hau!", "Hau, hau!", "Umówisz nas?", "Smaczek?", "Hau, hau, hau!"];
-    var n = 0, barkTimer = null;
+    var n = 0, barkTimer = null, excitedTimer = null;
+    var visible = true, sleepy = false, lastActive = Date.now(), lastPointer = 0;
+    var canAnimate = !reduceMotion && typeof Element !== "undefined" && "animate" in Element.prototype;
+
+    // prosta sprężyna: stiff = sztywność, damp = tłumienie
+    var spring = function (stiff, damp) { return { p: 0, v: 0, t: 0, stiff: stiff, damp: damp }; };
+    var step = function (sp) { sp.v = (sp.v + (sp.t - sp.p) * sp.stiff) * sp.damp; sp.p += sp.v; return Math.abs(sp.t - sp.p) + Math.abs(sp.v); };
+    var eyeX = spring(0.12, 0.72), eyeY = spring(0.12, 0.72), tilt = spring(0.07, 0.8);
+    var running = false;
+    var loop = function () {
+      var energy = step(eyeX) + step(eyeY) + step(tilt);
+      pupils.style.transform = "translate(" + eyeX.p.toFixed(2) + "px," + eyeY.p.toFixed(2) + "px)";
+      head.style.transform = "rotate(" + tilt.p.toFixed(2) + "deg)";
+      // uszy spóźniają się za ruchem głowy (overlapping action)
+      var flop = Math.max(-9, Math.min(9, -tilt.v * 16)).toFixed(2);
+      flops.forEach(function (f) { f.style.transform = "rotate(" + flop + "deg)"; });
+      if (energy > 0.01) requestAnimationFrame(loop); else running = false;
+    };
+    var kick = function () { if (!running && !reduceMotion) { running = true; requestAnimationFrame(loop); } };
+
+    var blink = function () {
+      if (!canAnimate || sleepy) return;
+      eyes.animate([{ transform: "scaleY(1)" }, { transform: "scaleY(.08)", offset: 0.45 }, { transform: "scaleY(1)" }],
+        { duration: 170, easing: "ease-in-out" });
+    };
+
+    var wake = function () {
+      lastActive = Date.now();
+      if (!sleepy) return;
+      sleepy = false;
+      art.classList.remove("is-sleepy");
+      tilt.t = 0; eyeY.t = 0; kick();
+      setTimeout(blink, 280);
+      setTimeout(blink, 520);
+    };
+    ["scroll", "keydown", "pointerdown", "touchstart"].forEach(function (ev) {
+      window.addEventListener(ev, wake, { passive: true });
+    });
+
+    // oczy i głowa podążają za kursorem; im bliżej pieska, tym mocniej przechyla głowę z ciekawości
+    window.addEventListener("pointermove", function (e) {
+      wake();
+      if (!visible || e.pointerType === "touch") return;
+      lastPointer = Date.now();
+      var r = dogSvg.getBoundingClientRect(), sc = r.width / 400;
+      var dx = e.clientX - (r.left + 188 * sc), dy = e.clientY - (r.top + 139 * sc);
+      var d = Math.hypot(dx, dy) || 1, k = Math.min(d / 260, 1) * 4;
+      eyeX.t = dx / d * k; eyeY.t = dy / d * k;
+      var near = Math.max(0, 1 - d / (r.width * 1.4));
+      tilt.t = Math.max(-8, Math.min(8, dx / r.width * 10)) * (0.35 + 0.65 * near);
+      kick();
+    }, { passive: true });
+
+    // gdy nikt nie rusza kursorem: losowe mrugnięcia (czasem podwójne) i rozglądanie się
+    if (!reduceMotion) {
+      (function scheduleBlink() {
+        setTimeout(function () {
+          if (visible && !document.hidden) { blink(); if (Math.random() < 0.25) setTimeout(blink, 240); }
+          scheduleBlink();
+        }, 2200 + Math.random() * 3800);
+      })();
+      (function scheduleGlance() {
+        setTimeout(function () {
+          if (visible && !document.hidden && !sleepy && Date.now() - lastPointer > 2500) {
+            var look = Math.random();
+            eyeX.t = look < 0.4 ? 0 : (Math.random() * 6 - 3);
+            eyeY.t = Math.random() * 3 - 1.5;
+            tilt.t = Math.random() < 0.35 ? (Math.random() * 8 - 4) : 0;
+            kick();
+          }
+          scheduleGlance();
+        }, 1600 + Math.random() * 2200);
+      })();
+      // drzemka po 30 s bez żadnej aktywności
+      setInterval(function () {
+        if (!sleepy && visible && !document.hidden && Date.now() - lastActive > 30000) {
+          sleepy = true;
+          art.classList.add("is-sleepy");
+          eyeX.t = 0; eyeY.t = 1.5; tilt.t = -5; kick();
+        }
+      }, 2000);
+    }
+
+    // kliknięcie: przygotowanie (przysiad) → skok z rozciągnięciem → lądowanie z ugięciem
     art.addEventListener("click", function () {
+      wake();
       bark.textContent = lines[n++ % lines.length];
-      art.classList.remove("is-barking"); void art.offsetWidth; art.classList.add("is-barking");
       bark.classList.add("is-on");
       clearTimeout(barkTimer);
       barkTimer = setTimeout(function () { bark.classList.remove("is-on"); }, 1400);
+      if (!canAnimate) return;
+      var out = "cubic-bezier(0.23, 1, 0.32, 1)", fall = "cubic-bezier(0.55, 0, 1, 0.45)";
+      jumpRig.animate([
+        { transform: "translateY(0) scale(1, 1)", easing: "ease-in-out" },
+        { transform: "translateY(0) scale(1.05, .93)", offset: 0.18, easing: out },
+        { transform: "translateY(-24px) scale(.97, 1.05)", offset: 0.48, easing: fall },
+        { transform: "translateY(0) scale(1.05, .94)", offset: 0.72, easing: out },
+        { transform: "translateY(0) scale(.99, 1.01)", offset: 0.86 },
+        { transform: "translateY(0) scale(1, 1)" }
+      ], { duration: 640 });
+      shadow.animate([
+        { transform: "scale(1)", opacity: 1 },
+        { transform: "scale(1.04)", offset: 0.18 },
+        { transform: "scale(.78)", opacity: 0.55, offset: 0.48 },
+        { transform: "scale(1.05)", opacity: 1, offset: 0.72 },
+        { transform: "scale(1)", opacity: 1 }
+      ], { duration: 640 });
+      [[earF, 1], [earB, -1]].forEach(function (pair) {
+        var el = pair[0], d = pair[1];
+        el.animate([
+          { transform: "rotate(0deg)" },
+          { transform: "rotate(" + (-4 * d) + "deg)", offset: 0.18 },
+          { transform: "rotate(" + (12 * d) + "deg)", offset: 0.5 },
+          { transform: "rotate(" + (-9 * d) + "deg)", offset: 0.76 },
+          { transform: "rotate(" + (3 * d) + "deg)", offset: 0.9 },
+          { transform: "rotate(0deg)" }
+        ], { duration: 780, easing: "ease-out" });
+      });
+      art.classList.add("is-excited");
+      clearTimeout(excitedTimer);
+      excitedTimer = setTimeout(function () { art.classList.remove("is-excited"); }, 1800);
     });
+
+    // poza ekranem lub w ukrytej karcie piesek odpoczywa (bez zbędnej pracy procesora)
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (entries) {
+        visible = entries[0].isIntersecting;
+        art.classList.toggle("is-paused", !visible);
+      }).observe(art);
+    }
+    document.addEventListener("visibilitychange", function () { art.classList.toggle("is-paused", document.hidden || !visible); });
   }
 
   /* ---------- Sygnały stresu ---------- */
