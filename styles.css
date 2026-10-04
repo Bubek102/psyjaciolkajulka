@@ -261,31 +261,32 @@ body.menu-open { overflow: hidden; }
   50% { border-radius: 56% 44% 52% 48% / 44% 56% 46% 54%; }
 }
 
-/* the dog */
+/* the dog – biszkoptowy labrador z linii użytkowej */
+.dog { --coat: #efd49c; --coat-2: #e8c886; --muzzle: #f6e5bf; --paw: #f3dfb0; --dark: #c49553; --nose: #2a201b; --eye: #2f1d12; }
 .dog { position: absolute; inset: 4% 4% 0; width: 92%; height: auto; overflow: visible; }
 .dog__shadow { fill: rgba(0,0,0,.18); }
-.dog__body, .dog__leg, .dog__skull, .dog__neck { fill: var(--butter); }
-.dog__haunch { fill: #ecca70; }
-.dog__leg--back { fill: var(--butter); }
+.dog__body, .dog__leg, .dog__skull, .dog__neck { fill: var(--coat); }
+.dog__haunch { fill: var(--coat-2); }
+.dog__leg--back { fill: var(--coat); }
 .dog__leg-gap { fill: none; stroke: #9a5f1c; stroke-width: 3.5; stroke-linecap: round; opacity: .18; }
-.dog__paw--back { fill: #f7e6bd; }
-.dog__toes { fill: none; stroke: #e2c27a; stroke-width: 2.4; stroke-linecap: round; }
-.dog__chest, .dog__muzzle { fill: var(--paper); }
+.dog__paw--back { fill: #ecd5a2; }
+.dog__toes { fill: none; stroke: #cfa766; stroke-width: 2.4; stroke-linecap: round; }
+.dog__muzzle { fill: url(#dog-g-muzzle); }
 .dog__ear path { fill: url(#dog-g-ear); }
 .dog__ear--back path { fill: url(#dog-g-ear-far); }
 .dog__shade { fill: url(#dog-g-shade); }
 .dog__light { fill: url(#dog-g-light); }
-.dog__brows { fill: none; stroke: #b77840; stroke-width: 4; stroke-linecap: round; opacity: .85; }
+.dog__light--soft { opacity: .45; }
+.dog__brows { fill: none; stroke: var(--dark); stroke-width: 4; stroke-linecap: round; opacity: .85; }
 .dog__ring { fill: none; stroke: var(--accent-deep); stroke-width: 3; }
-.dog__tail-fill { fill: #c98a52; }
+.dog__tail-fill { fill: var(--coat-2); }
 .dog__shine--small { opacity: .8; }
-.dog__spot { fill: #e9bb63; opacity: .9; }
-.dog__nose { fill: var(--ink); }
-.dog__eyes circle { fill: var(--ink); }
+.dog__nose { fill: var(--nose); }
+.dog__eyes circle { fill: var(--eye); }
 .dog__eyes .dog__shine { fill: #fff; }
 .dog__pupils { transform-box: view-box; will-change: transform; }
-.dog__paw { fill: #fff3d6; }
-.dog__blush { fill: #f2a48c; opacity: .55; }
+.dog__paw { fill: var(--paw); }
+.dog__blush { fill: #f2a48c; opacity: .45; }
 .hero__art { cursor: pointer; -webkit-tap-highlight-color: transparent; }
 .hero__art:active .dog { transform: scale(.98); }
 .dog { transition: transform 160ms var(--ease-out); }
@@ -302,13 +303,13 @@ body.menu-open { overflow: hidden; }
 .dog__tongue path { fill: #ef8f86; }
 .dog__tongue .dog__tongue-line { fill: none; stroke: #d9706a; stroke-width: 2; stroke-linecap: round; }
 .dog__nose-shine { fill: #fff; opacity: .35; }
-.dog__lick { fill: #ef8f86; opacity: 0; transform-box: view-box; transform-origin: 190px 198px; }
+.dog__lick { fill: #ef8f86; opacity: 0; transform-box: view-box; transform-origin: 190px 211px; }
 .dog__collar { fill: none; stroke: var(--accent); stroke-width: 15; stroke-linecap: round; }
 .dog__tag { fill: var(--peach); stroke: var(--accent-deep); stroke-width: 3; }
-.dog__tail > path { fill: none; stroke: #c98a52; stroke-width: 22; stroke-linecap: round; }
-.dog__tail { transform-origin: 292px 334px; transform-box: view-box; animation: wag 520ms ease-in-out infinite alternate; }
+.dog__tail > path { fill: none; stroke: var(--coat-2); stroke-width: 24; stroke-linecap: round; }
+.dog__tail { transform-origin: 290px 336px; transform-box: view-box; animation: wag 520ms ease-in-out infinite alternate; }
 /* końcówka ogona spóźnia się o ćwierć ruchu – efekt bicza (follow-through) */
-.dog__tail-tip { transform-origin: 338px 290px; transform-box: view-box; animation: wagTip 520ms ease-in-out 120ms infinite alternate; }
+.dog__tail-tip { transform-origin: 340px 286px; transform-box: view-box; animation: wagTip 520ms ease-in-out 120ms infinite alternate; }
 @keyframes wagTip { from { transform: rotate(-12deg); } to { transform: rotate(14deg); } }
 .hero__art.is-excited .dog__tail, .hero__art.is-excited .dog__tail-tip,
 .hero__art.is-petting .dog__tail, .hero__art.is-petting .dog__tail-tip { animation-duration: 230ms; }
@@ -321,9 +322,9 @@ body.menu-open { overflow: hidden; }
 .hero__art.is-sleepy .dog__breathe { animation-duration: 5200ms; }
 .dog__shadow { transform-box: fill-box; transform-origin: center; }
 
-.dog__ear-flop--front { transform-origin: 146px 96px; transform-box: view-box; }
-.dog__ear-flop--back { transform-origin: 234px 96px; transform-box: view-box; }
-.dog__ear--back { transform-origin: 238px 96px; transform-box: view-box; }
+.dog__ear-flop--front { transform-origin: 156px 94px; transform-box: view-box; }
+.dog__ear-flop--back { transform-origin: 224px 94px; transform-box: view-box; }
+.dog__ear--back { transform-origin: 224px 94px; transform-box: view-box; }
 
 /* sen po dłuższej bezczynności */
 .dog__lids { fill: none; stroke: var(--ink); stroke-width: 3.5; stroke-linecap: round; opacity: 0; transition: opacity 250ms ease; }
@@ -358,11 +359,11 @@ body.menu-open { overflow: hidden; }
 /* poza ekranem nic się nie rusza */
 .hero__art.is-paused, .hero__art.is-paused * { animation-play-state: paused !important; }
 @keyframes wag { from { transform: rotate(-14deg); } to { transform: rotate(16deg); } }
-.dog__eyes { transform-origin: 190px 152px; transform-box: view-box; }
+.dog__eyes { transform-origin: 190px 148px; transform-box: view-box; }
 .dog__head { transform-origin: 190px 224px; transform-box: view-box; will-change: transform; }
-.dog__ear--front { transform-origin: 142px 96px; transform-box: view-box; animation: ear 6s ease-in-out infinite; }
+.dog__ear--front { transform-origin: 156px 94px; transform-box: view-box; animation: ear 6s ease-in-out infinite; }
 @keyframes ear { 0%, 80%, 100% { transform: rotate(0); } 86% { transform: rotate(8deg); } 92% { transform: rotate(-3deg); } }
-.dog__tongue { transform-origin: 190px 201px; transform-box: view-box; animation: pant .9s ease-in-out infinite alternate; }
+.dog__tongue { transform-origin: 190px 214px; transform-box: view-box; animation: pant .9s ease-in-out infinite alternate; }
 @keyframes pant { from { transform: scaleY(.85); } to { transform: scaleY(1.1); } }
 
 .sticker {

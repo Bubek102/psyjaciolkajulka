@@ -138,67 +138,65 @@
           <div class="hero__blob"></div>
           <svg class="dog" viewBox="0 0 400 420" role="img">
             <defs>
-              <radialGradient id="dog-g-shade" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#8a5418" stop-opacity=".26"/><stop offset=".55" stop-color="#8a5418" stop-opacity=".12"/><stop offset="1" stop-color="#8a5418" stop-opacity="0"/></radialGradient>
-              <linearGradient id="dog-g-ear" x1="0" y1="0" x2=".5" y2="1"><stop offset="0" stop-color="#d4975c"/><stop offset="1" stop-color="#b8783f"/></linearGradient>
-              <linearGradient id="dog-g-ear-far" x1="0" y1="0" x2=".5" y2="1"><stop offset="0" stop-color="#c88a50"/><stop offset="1" stop-color="#a96d38"/></linearGradient>
-              <radialGradient id="dog-g-light" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fff" stop-opacity=".42"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
-              <clipPath id="dog-clip-head"><circle cx="190" cy="148" r="68"/><circle cx="140" cy="180" r="30"/><circle cx="240" cy="180" r="30"/></clipPath>
-              <clipPath id="dog-clip-body"><path d="M150 232 C 134 262, 132 316, 142 354 C 146 370, 152 382, 158 386 L 310 386 C 322 360, 324 318, 306 284 C 290 254, 260 236, 228 230 C 200 226, 168 222, 150 232 Z"/><ellipse cx="268" cy="338" rx="50" ry="48"/></clipPath>
+              <radialGradient id="dog-g-shade" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#8a5a1c" stop-opacity=".24"/><stop offset=".55" stop-color="#8a5a1c" stop-opacity=".11"/><stop offset="1" stop-color="#8a5a1c" stop-opacity="0"/></radialGradient>
+              <radialGradient id="dog-g-light" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fff" stop-opacity=".45"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+              <linearGradient id="dog-g-ear" x1="0" y1="0" x2=".4" y2="1"><stop offset="0" stop-color="#e6c588"/><stop offset="1" stop-color="#c99b57"/></linearGradient>
+              <linearGradient id="dog-g-ear-far" x1="0" y1="0" x2=".4" y2="1"><stop offset="0" stop-color="#dcb978"/><stop offset="1" stop-color="#bb8c4a"/></linearGradient>
+              <linearGradient id="dog-g-muzzle" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#efd49c"/><stop offset=".45" stop-color="#f6e5bf"/><stop offset="1" stop-color="#f8ead0"/></linearGradient>
+              <clipPath id="dog-clip-head"><circle cx="190" cy="146" r="64"/><circle cx="152" cy="180" r="24"/><circle cx="228" cy="180" r="24"/><path d="M160 178 C 160 164, 220 164, 220 178 L 222 206 C 222 224, 206 232, 190 232 C 174 232, 158 224, 158 206 Z"/></clipPath>
+              <clipPath id="dog-clip-body"><path d="M162 292 C 160 326, 160 360, 162 382 L 189 382 C 191 360, 191 326, 189 292 Z"/><path d="M196 292 C 194 326, 195 360, 197 382 L 222 382 C 224 360, 225 326, 223 292 Z"/><path d="M152 236 C 140 266, 140 312, 146 350 C 148 368, 152 380, 156 386 L 300 386 C 312 360, 314 324, 298 292 C 284 264, 258 246, 230 238 C 206 232, 172 226, 152 236 Z"/><ellipse cx="262" cy="344" rx="44" ry="42"/></clipPath>
             </defs>
-            <ellipse class="dog__shadow" cx="208" cy="392" rx="132" ry="13"/>
+            <ellipse class="dog__shadow" cx="208" cy="392" rx="128" ry="13"/>
             <g class="dog__jump">
               <g class="dog__breathe">
                 <g class="dog__tail">
-                  <path d="M292 334 C 318 326, 334 310, 338 290"/>
-                  <g class="dog__tail-tip">
-                    <path class="dog__tail-fill" d="M327 293 C 334 272, 338 254, 333 236 C 330 227, 341 222, 345 231 C 352 250, 351 274, 349 293 Z"/>
-                  </g>
+                  <path d="M290 336 C 316 326, 334 306, 340 284"/>
+                  <g class="dog__tail-tip"><path class="dog__tail-fill" d="M325 296 C 334 268, 341 248, 343 232 C 343 224, 353 222, 355 230 C 357 250, 357 272, 355 296 Z"/></g>
                 </g>
-                <path class="dog__neck" d="M164 200 L 218 200 L 236 250 L 152 250 Z"/>
-                <path class="dog__body" d="M150 232 C 134 262, 132 316, 142 354 C 146 370, 152 382, 158 386 L 310 386 C 322 360, 324 318, 306 284 C 290 254, 260 236, 228 230 C 200 226, 168 222, 150 232 Z"/>
-                <path class="dog__leg dog__leg--back" d="M198 300 C 196 330, 197 360, 199 382 L 227 382 C 229 360, 230 330, 228 300 Z"/>
-                <ellipse class="dog__haunch" cx="268" cy="338" rx="50" ry="48"/>
+                <path class="dog__neck" d="M160 196 L 220 196 L 236 262 L 146 262 Z"/>
+                <path class="dog__body" d="M152 236 C 140 266, 140 312, 146 350 C 148 368, 152 380, 156 386 L 300 386 C 312 360, 314 324, 298 292 C 284 264, 258 246, 230 238 C 206 232, 172 226, 152 236 Z"/>
+                <path class="dog__leg dog__leg--back" d="M196 292 C 194 326, 195 360, 197 382 L 222 382 C 224 360, 225 326, 223 292 Z"/>
+                <ellipse class="dog__haunch" cx="262" cy="344" rx="44" ry="42"/>
+                <path class="dog__leg" d="M162 292 C 160 326, 160 360, 162 382 L 189 382 C 191 360, 191 326, 189 292 Z"/>
                 <g clip-path="url(#dog-clip-body)">
-                  <circle class="dog__shade" cx="320" cy="390" r="130"/>
-                  <ellipse class="dog__shade" cx="191" cy="230" rx="78" ry="26"/>
+                  <circle class="dog__shade" cx="316" cy="392" r="124"/>
+                  <ellipse class="dog__shade" cx="190" cy="236" rx="74" ry="24"/>
+                  <ellipse class="dog__light dog__light--soft" cx="178" cy="286" rx="40" ry="54"/>
                 </g>
-                <ellipse class="dog__paw dog__paw--back" cx="292" cy="381" rx="26" ry="10"/>
-                <path class="dog__leg-gap" d="M195 318 C 194 340, 194 362, 195 378"/>
-                <path class="dog__leg" d="M160 296 C 158 328, 159 360, 161 382 L 191 382 C 193 360, 194 328, 192 296 Z"/>
-                <ellipse class="dog__paw" cx="176" cy="383" rx="21" ry="10"/>
-                <ellipse class="dog__paw dog__paw--back" cx="214" cy="383" rx="19" ry="9.5"/>
-                <path class="dog__toes" d="M170 379 L170 387 M182 379 L182 387 M208 379 L208 386 M220 379 L220 386 M286 377 L286 385 M298 377 L298 385"/>
-                <path class="dog__chest" d="M170 228 C 164 256, 170 286, 191 300 C 212 286, 218 256, 212 228 Z"/>
-                <path class="dog__collar" d="M162 226 Q 191 246 220 226"/>
-                <circle class="dog__ring" cx="191" cy="245" r="4.5"/>
-                <circle class="dog__tag" cx="191" cy="258" r="9.5"/>
+                <ellipse class="dog__paw dog__paw--back" cx="288" cy="382" rx="24" ry="9"/>
+                <path class="dog__leg-gap" d="M192.5 312 C 192 336, 192 360, 193 378"/>
+                <ellipse class="dog__paw" cx="175" cy="383" rx="19" ry="9.5"/>
+                <ellipse class="dog__paw dog__paw--back" cx="210" cy="383" rx="17.5" ry="9"/>
+                <path class="dog__toes" d="M169 379 L169 387 M181 379 L181 387 M204 379 L204 386 M215 379 L215 386 M282 378 L282 385 M294 378 L294 385"/>
+                <path class="dog__collar" d="M158 240 Q 191 260 224 240"/>
+                <circle class="dog__ring" cx="191" cy="259" r="4.5"/>
+                <circle class="dog__tag" cx="191" cy="272" r="9.5"/>
                 <g class="dog__head">
-                  <circle class="dog__skull" cx="190" cy="148" r="68"/>
-                  <circle class="dog__skull" cx="140" cy="180" r="30"/>
-                  <circle class="dog__skull" cx="240" cy="180" r="30"/>
+                  <circle class="dog__skull" cx="190" cy="146" r="64"/>
+                  <circle class="dog__skull" cx="152" cy="180" r="24"/>
+                  <circle class="dog__skull" cx="228" cy="180" r="24"/>
+                  <path class="dog__muzzle" d="M160 178 C 160 164, 220 164, 220 178 L 222 206 C 222 224, 206 232, 190 232 C 174 232, 158 224, 158 206 Z"/>
                   <g clip-path="url(#dog-clip-head)">
-                    <circle class="dog__shade" cx="262" cy="214" r="110"/>
-                    <ellipse class="dog__light" cx="164" cy="108" rx="62" ry="44"/>
+                    <circle class="dog__shade" cx="262" cy="212" r="108"/>
+                    <ellipse class="dog__light" cx="166" cy="104" rx="60" ry="42"/>
                   </g>
-                  <path class="dog__spot" d="M200 128 C 206 114, 232 112, 240 128 C 248 144, 240 168, 222 170 C 204 172, 194 144, 200 128 Z"/>
-                  <g class="dog__muzzle"><circle cx="176" cy="197" r="22"/><circle cx="204" cy="197" r="22"/><ellipse cx="190" cy="209" rx="18" ry="14"/></g>
-                  <ellipse class="dog__blush" cx="152" cy="192" rx="10" ry="6"/>
-                  <ellipse class="dog__blush" cx="228" cy="192" rx="10" ry="6"/>
-                  <g class="dog__tongue"><path d="M181 201 C 181 214, 185 220, 190 220 C 195 220, 199 214, 199 201 Z"/><path class="dog__tongue-line" d="M190 205 L190 213"/></g>
-                  <path class="dog__mouth" d="M190 191 L190 197 M174 197 C 178 205, 187 206, 190 197 C 193 206, 202 205, 206 197"/>
-                  <path class="dog__nose" d="M176 178 C 176 170, 204 170, 204 178 C 204 186, 195 192, 190 192 C 185 192, 176 186, 176 178 Z"/>
-                  <ellipse class="dog__nose-shine" cx="184" cy="176" rx="4" ry="2"/>
-                  <path class="dog__lick" d="M182 198 C 182 186, 185 177, 190.5 177 C 196 177, 199 186, 199 198 Z"/>
-                  <path class="dog__brows" d="M152 133 Q162 127 172 131 M208 131 Q218 127 228 133"/>
+                  <ellipse class="dog__blush" cx="150" cy="190" rx="9" ry="5.5"/>
+                  <ellipse class="dog__blush" cx="230" cy="190" rx="9" ry="5.5"/>
+                  <g class="dog__tongue"><path d="M181 214 C 181 227, 185 233, 190 233 C 195 233, 199 227, 199 214 Z"/><path class="dog__tongue-line" d="M190 218 L190 226"/></g>
+                  <path class="dog__mouth" d="M190 203 L190 210 M172 210 C 176 219, 186 220, 190 210 C 194 220, 204 219, 208 210"/>
+                  <path class="dog__nose" d="M173 188 C 173 178, 207 178, 207 188 C 207 197, 196 204, 190 204 C 184 204, 173 197, 173 188 Z"/>
+                  <ellipse class="dog__nose-shine" cx="182" cy="185" rx="5" ry="2.4"/>
+                  <path class="dog__lick" d="M182 211 C 182 199, 185 190, 190.5 190 C 196 190, 199 199, 199 211 Z"/>
+                  <path class="dog__brows" d="M150 129 Q161 123 172 127 M208 127 Q219 123 230 129"/>
                   <g class="dog__eyes"><g class="dog__pupils">
-                    <circle cx="164" cy="152" r="10"/><circle cx="216" cy="152" r="10"/>
-                    <circle class="dog__shine" cx="167.5" cy="148.5" r="3.4"/><circle class="dog__shine" cx="219.5" cy="148.5" r="3.4"/>
-                    <circle class="dog__shine dog__shine--small" cx="161" cy="156" r="1.5"/><circle class="dog__shine dog__shine--small" cx="213" cy="156" r="1.5"/>
+                    <circle cx="162" cy="148" r="10.5"/><circle cx="218" cy="148" r="10.5"/>
+                    <circle class="dog__shine" cx="165.5" cy="144.5" r="3.5"/><circle class="dog__shine" cx="221.5" cy="144.5" r="3.5"/>
+                    <circle class="dog__shine dog__shine--small" cx="159" cy="152" r="1.6"/><circle class="dog__shine dog__shine--small" cx="215" cy="152" r="1.6"/>
                   </g></g>
-                  <path class="dog__lids" d="M153 152 Q164 160 175 152 M205 152 Q216 160 227 152"/>
-                  <path class="dog__happy" d="M154 156 Q164 145 174 156 M206 156 Q216 145 226 156"/>
-                  <g class="dog__ear-flop dog__ear-flop--back"><g class="dog__ear dog__ear--back"><path d="M232 92 C 252 84, 274 96, 278 124 C 282 152, 276 180, 264 193 C 254 203, 242 196, 240 180 C 238 160, 232 134, 224 114 C 220 102, 224 94, 232 92 Z"/></g></g>
-                  <g class="dog__ear-flop dog__ear-flop--front"><g class="dog__ear dog__ear--front"><path d="M148 92 C 128 84, 106 96, 102 124 C 98 152, 104 180, 116 193 C 126 203, 138 196, 140 180 C 142 160, 148 134, 156 114 C 160 102, 156 94, 148 92 Z"/></g></g>
+                  <path class="dog__lids" d="M151 148 Q162 156 173 148 M207 148 Q218 156 229 148"/>
+                  <path class="dog__happy" d="M152 152 Q162 141 172 152 M208 152 Q218 141 228 152"/>
+                  <g class="dog__ear-flop dog__ear-flop--back"><g class="dog__ear dog__ear--back"><path d="M216 92 C 234 86, 260 96, 266 122 C 272 148, 268 176, 256 196 C 250 204, 240 200, 238 190 C 234 168, 228 140, 214 112 C 210 104, 210 95, 216 92 Z"/></g></g>
+                  <g class="dog__ear-flop dog__ear-flop--front"><g class="dog__ear dog__ear--front"><path d="M164 92 C 146 86, 120 96, 114 122 C 108 148, 112 176, 124 196 C 130 204, 140 200, 142 190 C 146 168, 152 140, 166 112 C 170 104, 170 95, 164 92 Z"/></g></g>
                 </g>
               </g>
             </g>
