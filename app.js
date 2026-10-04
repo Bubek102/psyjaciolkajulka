@@ -208,178 +208,15 @@
   });
   if (panel) showSignal(0, true);
 
-  /* ---------- Rezerwacje (Cal.com) ---------- */
-  var svcBox = $(".booking__services");
-  var embedBox = $("#cal-embed");
-  var chosenLabel = $(".booking__chosen");
-  var fallback = $(".booking__fallback");
-  var loading = $(".booking__loading");
-  var current = null;
-  var calLoaded = false;
-  var calFailed = false;
-  var mounted = {};
-
-  var calUrl = function (svc) { return (CONFIG.calOrigin || "https://cal.com") + "/" + svc.calLink; };
-
-  SERVICES.forEach(function (svc) {
-    var b = document.createElement("button");
-    b.type = "button";
-    b.className = "svc";
-    b.setAttribute("role", "radio");
-    b.setAttribute("aria-checked", "false");
-    b.dataset.id = svc.id;
-    b.innerHTML = '<span class="svc__dot"></span><span><span class="svc__name"></span><span class="svc__meta"></span></span><span class="svc__price"></span>';
-    $(".svc__name", b).textContent = svc.name;
-    $(".svc__meta", b).textContent = svc.meta;
-    $(".svc__price", b).textContent = svc.price;
-    b.tabIndex = -1;
-    b.addEventListener("click", function () { selectService(svc.id); });
-    // wzorzec ARIA radiogroup: strzałki przenoszą wybór między usługami
-    b.addEventListener("keydown", function (e) {
-      var dir = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 }[e.key];
-      if (!dir) return;
-      e.preventDefault();
-      var i = SERVICES.indexOf(svc);
-      var next = SERVICES[(i + dir + SERVICES.length) % SERVICES.length];
-      selectService(next.id);
-      $('.svc[data-id="' + next.id + '"]', svcBox).focus();
-    });
-    svcBox.appendChild(b);
-  });
-
-  var showFallback = function () {
-    calFailed = true;
-    if (loading) loading.hidden = true;
-    embedBox.hidden = true;
-    fallback.hidden = false;
+  /* ---------- Rezerwacje: przejście do kalendarza Cal.com ---------- */
+  var CAL_ORIGIN = CONFIG.calOrigin || "https://cal.com";
+  var calUrl = function (id) {
+    var svc = id && SERVICES.filter(function (s) { return s.id === id; })[0];
+    return CAL_ORIGIN + "/" + (svc ? svc.calLink : (CONFIG.calProfile || "psyjaciolka-julka"));
   };
-
-  var loadCal = function () {
-    if (calLoaded) return;
-    calLoaded = true;
-    /* Oficjalny snippet osadzania Cal.com */
-    (function (C, A, L) {
-      var p = function (a, ar) { a.q.push(ar); };
-      var d = C.document;
-      C.Cal = C.Cal || function () {
-        var cal = C.Cal; var ar = arguments;
-        if (!cal.loaded) {
-          cal.ns = {}; cal.q = cal.q || [];
-          var s = d.createElement("script");
-          s.src = A;
-          s.onerror = showFallback;
-          d.head.appendChild(s);
-          cal.loaded = true;
-        }
-        if (ar[0] === L) {
-          var api = function () { p(api, arguments); };
-          var namespace = ar[1];
-          api.q = api.q || [];
-          if (typeof namespace === "string") {
-            cal.ns[namespace] = cal.ns[namespace] || api;
-            p(cal.ns[namespace], ar);
-            p(cal, ["initNamespace", namespace]);
-          } else p(cal, ar);
-          return;
-        }
-        p(cal, ar);
-      };
-    })(window, "https://app.cal.com/embed/embed.js", "init");
-  };
-
-  var mount = function (svc) {
-    loadCal();
-    $$("[data-ns]", embedBox).forEach(function (el) { el.hidden = el.dataset.ns !== svc.id; });
-    if (mounted[svc.id]) return;
-    mounted[svc.id] = true;
-
-    var el = document.createElement("div");
-    el.dataset.ns = svc.id;
-    el.id = "cal-inline-" + svc.id;
-    embedBox.appendChild(el);
-
-    var ns = "psy_" + svc.id;
-    window.Cal("init", ns, { origin: CONFIG.calOrigin || "https://cal.com" });
-    window.Cal.ns[ns]("inline", {
-      elementOrSelector: "#" + el.id,
-      calLink: svc.calLink,
-      config: { layout: "month_view", theme: "light" }
-    });
-    window.Cal.ns[ns]("ui", {
-      theme: "light",
-      hideEventTypeDetails: false,
-      layout: "month_view",
-      cssVarsPerTheme: { light: { "cal-brand": CONFIG.brandColor || "#2f5d50" } }
-    });
-    window.Cal.ns[ns]("on", {
-      action: "linkReady",
-      callback: function () {
-        calFailed = false;
-        if (loading) loading.hidden = true;
-        embedBox.hidden = false;
-        fallback.hidden = true;
-      }
-    });
-    window.Cal.ns[ns]("on", { action: "linkFailed", callback: showFallback });
-
-    setTimeout(function () {
-      if (loading && !loading.hidden && !calFailed) showFallback();
-    }, 15000);
-  };
-
-  var selectService = function (id, opts) {
-    var svc = SERVICES.filter(function (s) { return s.id === id; })[0] || SERVICES[0];
-    if (!svc) return;
-    current = svc;
-    $$(".svc", svcBox).forEach(function (b) {
-      var on = b.dataset.id === svc.id;
-      b.setAttribute("aria-checked", String(on));
-      b.tabIndex = on ? 0 : -1;
-    });
-    chosenLabel.textContent = svc.name + " · " + svc.price;
-    $$(".booking__direct").forEach(function (a) { a.href = calUrl(svc); });
-    $(".booking__mail").href = "mailto:" + (CONFIG.email || "psyjaciolkajulka@gmail.com") +
-      "?subject=" + encodeURIComponent("Rezerwacja: " + svc.name);
-    if (!opts || !opts.lazy) mount(svc);
-  };
-
-  if (SERVICES.length) selectService(SERVICES[0].id, { lazy: true });
-
-  // Kalendarz ładujemy dopiero, gdy użytkownik zbliża się do sekcji – strona startuje szybciej.
+  // linki w HTML mają adres profilu jako fallback; tu podmieniamy je na konkretne usługi z config.js
+  $$("[data-cal]").forEach(function (a) { a.href = calUrl(a.getAttribute("data-cal")); });
   var bookingSection = $("#kalendarz");
-  if ("IntersectionObserver" in window) {
-    var calIO = new IntersectionObserver(function (entries) {
-      if (entries[0].isIntersecting) { mount(current); calIO.disconnect(); }
-    }, { rootMargin: "600px 0px" });
-    calIO.observe(bookingSection);
-  } else if (current) {
-    mount(current);
-  }
-
-  var goBook = function (id) {
-    selectService(id);
-    bookingSection.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" });
-    // po dojechaniu do kalendarza jednorazowo wskaż wybraną usługę
-    var chosen = $('.svc[data-id="' + id + '"]', svcBox);
-    if (!chosen) return;
-    var flash = function () {
-      chosen.classList.remove("is-flash"); void chosen.offsetWidth; chosen.classList.add("is-flash");
-      setTimeout(function () { chosen.classList.remove("is-flash"); }, 700);
-    };
-    // scrollend, a gdy przewijania nie było (już jesteśmy przy kalendarzu) – zapasowy timeout
-    var done = false;
-    var once = function () {
-      if (done) return;
-      done = true;
-      window.removeEventListener("scrollend", once);
-      flash();
-    };
-    if ("onscrollend" in window && !reduceMotion) window.addEventListener("scrollend", once);
-    setTimeout(once, reduceMotion ? 0 : 1200);
-  };
-  $$("[data-book]").forEach(function (b) {
-    b.addEventListener("click", function () { goBook(b.getAttribute("data-book")); });
-  });
 
   /* ---------- Dopasowanie usługi ---------- */
   var RECS = {
@@ -405,9 +242,8 @@
     result.innerHTML = "<small>Polecam</small><h4></h4><p></p>";
     $("h4", result).textContent = (rec.label || svc.name) + " · " + svc.price;
     $("p", result).textContent = nbsp(rec.why);
-    var btn = document.createElement("button");
-    btn.type = "button"; btn.className = "btn"; btn.textContent = "Wybierz termin →";
-    btn.addEventListener("click", function () { goBook(svc.id); });
+    var btn = document.createElement("a");
+    btn.className = "btn"; btn.href = calUrl(svc.id); btn.textContent = "Wybierz termin →";
     result.appendChild(btn);
   });
 

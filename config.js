@@ -1,7 +1,7 @@
 /*
  * Konfiguracja strony psyjaciolkajulka.pl
  *
- * Rezerwacje obsługuje kalendarz Cal.com Julki: https://cal.com/psyjaciolka-julka
+ * Przyciski rezerwacji prowadzą do kalendarza Cal.com Julki: https://cal.com/psyjaciolka-julka
  * Aby kliknięcie usługi otwierało od razu jej kalendarz (a nie listę wszystkich usług),
  * wpisz w `calLink` pełny link do konkretnego wydarzenia, np. "psyjaciolka-julka/konsultacja-online"
  * (to, co jest po "cal.com/" w adresie danego typu spotkania w panelu Cal.com).

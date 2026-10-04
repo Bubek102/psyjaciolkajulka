@@ -43,9 +43,9 @@ Dopóki brakuje któregoś zdjęcia, strona pokazuje ilustrowaną zaślepkę, wi
 
 ## Rezerwacje
 
-Sekcja „Kalendarz” osadza kalendarz Cal.com Julki (`cal.com/psyjaciolka-julka`). Dzięki temu wolne terminy, potwierdzenia, przypomnienia mailowe i synchronizacja z kalendarzem Google działają tak, jak w jej obecnym systemie. Kolory kalendarza są dopasowane do strony.
+Wszystkie przyciski „Umów” prowadzą bezpośrednio do kalendarza Julki w Cal.com (`cal.com/psyjaciolka-julka`). Tam klient wybiera termin i potwierdza rezerwację. Linki działają także bez JavaScriptu.
 
-Jeśli kalendarz się nie załaduje (np. przez blokadę skryptów), strona pokaże przyciski awaryjne: link do kalendarza w nowej karcie i maila.
+Żeby przycisk przy danej usłudze otwierał od razu kalendarz tej usługi, uzupełnij `calLink` w `config.js` (np. `psyjaciolka-julka/konsultacja-online`). Integracja kalendarza bezpośrednio na stronie jest planowana na później.
 
 ## Źródła treści
 
