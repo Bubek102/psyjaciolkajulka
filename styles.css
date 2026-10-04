@@ -302,6 +302,7 @@ body.menu-open { overflow: hidden; }
 .dog__tongue path { fill: #ef8f86; }
 .dog__tongue .dog__tongue-line { fill: none; stroke: #d9706a; stroke-width: 2; stroke-linecap: round; }
 .dog__nose-shine { fill: #fff; opacity: .35; }
+.dog__lick { fill: #ef8f86; opacity: 0; transform-box: view-box; transform-origin: 190px 198px; }
 .dog__collar { fill: none; stroke: var(--accent); stroke-width: 15; stroke-linecap: round; }
 .dog__tag { fill: var(--peach); stroke: var(--accent-deep); stroke-width: 3; }
 .dog__tail > path { fill: none; stroke: #c98a52; stroke-width: 22; stroke-linecap: round; }
@@ -309,7 +310,8 @@ body.menu-open { overflow: hidden; }
 /* końcówka ogona spóźnia się o ćwierć ruchu – efekt bicza (follow-through) */
 .dog__tail-tip { transform-origin: 338px 290px; transform-box: view-box; animation: wagTip 520ms ease-in-out 120ms infinite alternate; }
 @keyframes wagTip { from { transform: rotate(-12deg); } to { transform: rotate(14deg); } }
-.hero__art.is-excited .dog__tail, .hero__art.is-excited .dog__tail-tip { animation-duration: 230ms; }
+.hero__art.is-excited .dog__tail, .hero__art.is-excited .dog__tail-tip,
+.hero__art.is-petting .dog__tail, .hero__art.is-petting .dog__tail-tip { animation-duration: 230ms; }
 .hero__art.is-sleepy .dog__tail, .hero__art.is-sleepy .dog__tail-tip { animation-duration: 1800ms; }
 
 /* oddech: całe ciało lekko „rośnie” od podłogi */
@@ -336,6 +338,22 @@ body.menu-open { overflow: hidden; }
 .hero__art.is-sleepy .dog__zzz text:nth-child(2) { animation-delay: 1s; }
 .hero__art.is-sleepy .dog__zzz text:nth-child(3) { animation-delay: 2s; }
 @keyframes zzz { 0% { opacity: 0; transform: translate(-4px, 8px) scale(.9); } 30% { opacity: .95; } 70% { opacity: .95; } 100% { opacity: 0; transform: translate(8px, -14px) scale(1.05); } }
+
+/* mimika: radość (głaskanie, „Hau!”), uwaga, serduszka */
+.dog__happy { fill: none; stroke: var(--ink); stroke-width: 4; stroke-linecap: round; opacity: 0; transition: opacity 120ms ease; }
+.hero__art.is-happy .dog__pupils { opacity: 0; transition-duration: 120ms; }
+.hero__art.is-happy .dog__happy { opacity: 1; }
+.dog__brows { transform-box: view-box; transition: transform 260ms var(--ease-out); }
+.hero__art.is-attentive .dog__brows { transform: translateY(-2.5px); }
+.hero__art.is-happy .dog__brows { transform: translateY(-4px); }
+.dog__blush { transition: opacity 250ms ease; }
+.hero__art.is-happy .dog__blush { opacity: .95; }
+.dog__hearts path { fill: #ef8f86; opacity: 0; transform-box: fill-box; transform-origin: center; }
+.hero__art.is-petting .dog__hearts path { animation: heartUp 1500ms var(--ease-out) infinite; }
+.hero__art.is-petting .dog__hearts g:nth-child(2) path { animation-delay: 450ms; }
+.hero__art.is-petting .dog__hearts g:nth-child(3) path { animation-delay: 900ms; }
+@keyframes heartUp { 0% { opacity: 0; transform: translateY(4px) scale(.7); } 20% { opacity: 1; } 100% { opacity: 0; transform: translateY(-16px) scale(1.1); } }
+.hero__art.is-petting { cursor: grab; }
 
 /* poza ekranem nic się nie rusza */
 .hero__art.is-paused, .hero__art.is-paused * { animation-play-state: paused !important; }

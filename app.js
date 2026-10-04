@@ -144,7 +144,9 @@
     var flops = $$(".dog__ear-flop"), earF = $(".dog__ear--front"), earB = $(".dog__ear--back");
     var bark = $(".bark");
     var lines = ["Hau!", "Hau, hau!", "Umówisz nas?", "Smaczek?", "Hau, hau, hau!"];
-    var n = 0, barkTimer = null, excitedTimer = null;
+    var n = 0, barkTimer = null, excitedTimer = null, happyTimer = null, petTimer = null;
+    var petDist = 0, petLast = null, petting = false;
+    var tongue = $(".dog__tongue"), lickTongue = $(".dog__lick");
     var visible = true, sleepy = false, lastActive = Date.now(), lastPointer = 0;
     var canAnimate = !reduceMotion && typeof Element !== "undefined" && "animate" in Element.prototype;
 
@@ -168,6 +170,16 @@
       if (!canAnimate || sleepy) return;
       eyes.animate([{ transform: "scaleY(1)" }, { transform: "scaleY(.08)", offset: 0.45 }, { transform: "scaleY(1)" }],
         { duration: 170, easing: "ease-in-out" });
+    };
+
+    var setHappy = function (ms) {
+      art.classList.add("is-happy");
+      clearTimeout(happyTimer);
+      happyTimer = setTimeout(function () { if (!petting) art.classList.remove("is-happy"); }, ms);
+    };
+    var stopPetting = function () {
+      petting = false; petDist = 0; petLast = null;
+      art.classList.remove("is-petting", "is-happy");
     };
 
     var wake = function () {
@@ -194,6 +206,23 @@
       eyeX.t = dx / d * k; eyeY.t = dy / d * k;
       var near = Math.max(0, 1 - d / (r.width * 1.4));
       tilt.t = Math.max(-8, Math.min(8, dx / r.width * 10)) * (0.35 + 0.65 * near);
+      art.classList.toggle("is-attentive", near > 0.45);
+
+      // głaskanie: ruch kursora po głowie pieska
+      var vx = (e.clientX - r.left) / sc, vy = (e.clientY - r.top) / sc;
+      if (Math.hypot(vx - 190, vy - 150) < 82) {
+        if (petLast) petDist += Math.hypot(vx - petLast.x, vy - petLast.y);
+        petLast = { x: vx, y: vy };
+        if (!petting && petDist > 140) {
+          petting = true;
+          art.classList.add("is-petting", "is-happy");
+        }
+        if (petting) tilt.t = Math.max(-7, Math.min(7, (vx - 190) / 10)); // wtula głowę w rękę
+        clearTimeout(petTimer);
+        petTimer = setTimeout(stopPetting, 650);
+      } else if (petLast) {
+        petLast = null; petDist = 0;
+      }
       kick();
     }, { passive: true });
 
@@ -217,6 +246,21 @@
           scheduleGlance();
         }, 1600 + Math.random() * 2200);
       })();
+      // od czasu do czasu oblizuje nos (ruch wtórny w spoczynku)
+      (function scheduleLick() {
+        setTimeout(function () {
+          if (canAnimate && visible && !document.hidden && !sleepy && !petting) {
+            lickTongue.animate([
+              { opacity: 0, transform: "rotate(0deg) scaleY(.35)" },
+              { opacity: 1, transform: "rotate(-16deg) scaleY(1)", offset: 0.35 },
+              { opacity: 1, transform: "rotate(8deg) scaleY(1)", offset: 0.62 },
+              { opacity: 0, transform: "rotate(0deg) scaleY(.35)" }
+            ], { duration: 560, easing: "ease-in-out" });
+            tongue.animate([{ opacity: 1 }, { opacity: 0, offset: 0.12 }, { opacity: 0, offset: 0.88 }, { opacity: 1 }], { duration: 560 });
+          }
+          scheduleLick();
+        }, 12000 + Math.random() * 14000);
+      })();
       // drzemka po 30 s bez żadnej aktywności
       setInterval(function () {
         if (!sleepy && visible && !document.hidden && Date.now() - lastActive > 30000) {
@@ -234,6 +278,7 @@
       bark.classList.add("is-on");
       clearTimeout(barkTimer);
       barkTimer = setTimeout(function () { bark.classList.remove("is-on"); }, 1400);
+      setHappy(750);
       if (!canAnimate) return;
       var out = "cubic-bezier(0.23, 1, 0.32, 1)", fall = "cubic-bezier(0.55, 0, 1, 0.45)";
       jumpRig.animate([
