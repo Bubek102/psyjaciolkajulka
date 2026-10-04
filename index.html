@@ -139,6 +139,7 @@
           <svg class="dog" viewBox="0 0 400 420" role="img">
             <ellipse class="dog__shadow" cx="205" cy="392" rx="128" ry="13"/>
             <g class="dog__tail"><path d="M282 330 C 330 318, 350 270, 338 228" /></g>
+            <path class="dog__neck" d="M168 200 L224 200 L240 252 L160 252 Z"/>
             <path class="dog__body" d="M150 250 C 140 300, 140 360, 160 388 L 300 388 C 318 350, 312 290, 280 252 C 250 214, 168 212, 150 250 Z"/>
             <path class="dog__haunch" d="M238 300 C 290 290, 318 340, 300 388 L 226 388 C 214 350, 214 316, 238 300 Z"/>
             <rect class="dog__leg" x="160" y="306" width="30" height="84" rx="15"/>
@@ -147,21 +148,22 @@
             <ellipse class="dog__paw" cx="175" cy="384" rx="19" ry="9"/>
             <ellipse class="dog__paw" cx="213" cy="384" rx="19" ry="9"/>
             <ellipse class="dog__chest" cx="190" cy="282" rx="30" ry="46"/>
-            <rect class="dog__collar" x="150" y="226" width="96" height="18" rx="9" transform="rotate(-6 198 235)"/>
-            <circle class="dog__tag" cx="196" cy="254" r="10"/>
+            <rect class="dog__collar" x="156" y="226" width="86" height="17" rx="8.5" transform="rotate(-3 199 234)"/>
+            <circle class="dog__tag" cx="199" cy="252" r="9.5"/>
             <g class="dog__head">
-              <path class="dog__ear dog__ear--back" d="M222 104 C 262 96, 276 150, 258 196 C 246 178, 232 150, 222 104 Z"/>
+              <ellipse class="dog__ear dog__ear--back" cx="250" cy="146" rx="21" ry="48" transform="rotate(-16 250 146)"/>
               <circle class="dog__skull" cx="192" cy="152" r="66"/>
-              <path class="dog__ear dog__ear--front" d="M150 104 C 112 94, 98 150, 116 200 C 130 180, 146 150, 150 104 Z"/>
-              <ellipse class="dog__muzzle" cx="178" cy="188" rx="40" ry="30"/>
-              <ellipse class="dog__nose" cx="166" cy="174" rx="13" ry="9"/>
-              <path class="dog__mouth" d="M166 184 C 166 198, 180 204, 190 196"/>
-              <path class="dog__tongue" d="M178 198 C 178 216, 196 218, 196 200"/>
+              <g class="dog__ear dog__ear--front"><ellipse cx="128" cy="150" rx="19" ry="46" transform="rotate(16 128 150)"/></g>
+              <ellipse class="dog__muzzle" cx="184" cy="188" rx="40" ry="30"/>
+              <g class="dog__tongue"><path d="M174 193 C 174 208, 178 214, 184 214 C 190 214, 194 208, 194 193 Z"/><path class="dog__tongue-line" d="M184 197 L184 206"/></g>
+              <path class="dog__mouth" d="M184 180 L184 187 M166 187 C 170 196, 180 197, 184 187 C 188 197, 198 196, 202 187"/>
+              <ellipse class="dog__nose" cx="184" cy="174" rx="13" ry="9"/>
+              <ellipse class="dog__nose-shine" cx="180" cy="171" rx="3.5" ry="2"/>
               <circle class="dog__spot" cx="226" cy="128" r="16"/>
-              <ellipse class="dog__blush" cx="226" cy="176" rx="11" ry="6"/>
+              <ellipse class="dog__blush" cx="221" cy="184" rx="10" ry="5.5"/>
               <g class="dog__eyes"><g class="dog__pupils">
-                <circle cx="168" cy="140" r="7.5"/><circle cx="214" cy="138" r="7.5"/>
-                <circle class="dog__shine" cx="170.5" cy="137.2" r="2.4"/><circle class="dog__shine" cx="216.5" cy="135.2" r="2.4"/>
+                <circle cx="166" cy="140" r="7.5"/><circle cx="210" cy="138" r="7.5"/>
+                <circle class="dog__shine" cx="168.5" cy="137.2" r="2.4"/><circle class="dog__shine" cx="212.5" cy="135.2" r="2.4"/>
               </g></g>
             </g>
           </svg>
